@@ -60,3 +60,11 @@ instructor
 # matadata
 my_workspace/target/.metadata
 my_workspace/host/.metadata
+
+# general
+**/Debug/
+**/Release/
+**/html/
+**/Backup/
+**/*.bak
+**/.~lock.*
