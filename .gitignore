@@ -56,3 +56,7 @@ downloads
 
 # instructor
 instructor
+
+# matadata
+my_workspace/target/.metadata
+my_workspace/host/.metadata
