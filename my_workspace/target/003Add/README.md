@@ -26,4 +26,9 @@ CopyDataInit:
   str r4, [r0, r3]
   adds r3, r3, #4
 ```
+To disassemble the executable `.elf` file we use the following command:
+
+```
+arm-none-eabi-objdump -d 003Add.elf
+```
 
