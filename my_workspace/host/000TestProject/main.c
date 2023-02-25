@@ -7,11 +7,18 @@
 #include<stdio.h>
 
 int main(int argc, char **argv) {
-	printf("Hello world\n");
+	double charge, chargeE;
+	double electrons;
+	printf("Enter the charge: ");
+	scanf("%lf", &charge);
 
-	printf("Press 'Enter' to exit this application\n");
+	printf("Enter the charge of the electron: ");
+	scanf("%le", &chargeE);
 
-	getchar();
+	electrons = (charge / chargeE) * -1;
+
+	printf("Total of number of electrons = %le\n", electrons);
+	printf("Total of number of electrons = %lf\n", electrons);
 
 	return 0;
 }
