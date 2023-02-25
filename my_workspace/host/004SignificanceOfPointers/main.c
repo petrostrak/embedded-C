@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 
 long long int x = 0xFFFEABCD11112345;
 
@@ -16,11 +17,11 @@ long long int x = 0xFFFEABCD11112345;
 
 int main()
 {
-    char *addr = (char*)&x;
+    int8_t *addr = (int8_t*)&x;
     printf("Value of x is %d\n", *addr); // This will fetch 1 byte of data stored in x
     printf("Address of x is %p\n", addr);
 
-    for (char i = 0; i < 7; i++)
+    for (int8_t i = 0; i < 7; i++)
     {
         addr++;
         printf("Value of x is %d\n", *addr);
