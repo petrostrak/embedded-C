@@ -14,10 +14,10 @@ int main(void) {
 	printf("Please give a number: ");
 	scanf("%d", &x);
 
-	if ((x & mask_value) == 0) {
-		printf("The given number is even.\n");
-	} else {
+	if (x & mask_value) { // if its 1 then its odd
 		printf("The given number is odd.\n");
+	} else { // else if its 0 its even
+		printf("The given number is even.\n");
 	}
 
 	return EXIT_SUCCESS;
