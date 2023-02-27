@@ -12,6 +12,7 @@ int main(int argc, char **argv) {
 	printf("Enter the charge: ");
 	scanf("%lf", &charge);
 
+
 	printf("Enter the charge of the electron: ");
 	scanf("%le", &chargeE);
 
