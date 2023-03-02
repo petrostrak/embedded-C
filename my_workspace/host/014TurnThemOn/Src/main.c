@@ -40,9 +40,10 @@ int main(void)
 //	*pGPIOEmode |= 0x55550000; // set the 8th-15th pin mode to 01 (general purpose output mode) -- All LEDs
 //
 //	// Set the 8th-15th bit of the output data register to make the I/O pin-8 as HIGH (1) (3,3V) -- All LEDs
-//	*pGPIOEoutput |= 0xFFFF;
+//	*pGPIOEoutput |= 0x0000FF00;
 
     /* Loop forever */
 	for(;;);
 }
+
 
