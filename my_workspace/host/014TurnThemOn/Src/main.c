@@ -25,16 +25,16 @@ int main(void)
 	uint32_t *pGPIOEoutput = (uint32_t*) 0x48001014;
 
 	// Enable the clock for GPIOE peripheral in the AHBENR
-	*pRCC |= 0x00200000;
+	*pRCC |= (1 << 21); // SET the 21st bit position
 
 	// Configure the mode of the IO pin as output.
-	*pGPIOEmode &= 0xFFFCFFFF; // clear all pins
+	*pGPIOEmode &= ~(3 << 16); // clear 16th and 17th pin (binary of 3 is 11)
 //	*pGPIOEmode |= 0x55550000; // set the 8th-15th pin mode to 01 general purpose output mode) -- All LEDs
-	*pGPIOEmode |= 0x00010000; // set the 8th pin mode to 01 (general purpose output mode)
+	*pGPIOEmode |= (1 << 16); // set the 8th pin mode to 01 (general purpose output mode)
 
 
 	// Set the 8th bit of the output data register to make the I/O pin-8 as HIGH (1) (3,3V)
-	*pGPIOEoutput |= 0x0100;
+	*pGPIOEoutput |= (1 << 8);
 
 //	// Turn on all leds
 //	*pGPIOEmode |= 0x55550000; // set the 8th-15th pin mode to 01 (general purpose output mode) -- All LEDs
