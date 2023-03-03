@@ -18,6 +18,8 @@
 
 #include <stdint.h>
 
+void delay(uint32_t seconds);
+
 int main(void)
 {
 	uint32_t *pRCC = (uint32_t*) 0x40021014;
@@ -29,21 +31,29 @@ int main(void)
 
 	// Configure the mode of the IO pin as output.
 	*pGPIOEmode &= ~(3 << 16); // clear 16th and 17th pin (binary of 3 is 11)
-//	*pGPIOEmode |= 0x55550000; // set the 8th-15th pin mode to 01 general purpose output mode) -- All LEDs
-	*pGPIOEmode |= (1 << 16); // set the 8th pin mode to 01 (general purpose output mode)
+	*pGPIOEmode |= 0x55550000; // set the 8th-15th pin mode to 01 general purpose output mode) -- All LEDs
+//	*pGPIOEmode |= (1 << 16); // set the 8th pin mode to 01 (general purpose output mode)
 
 
 	// Set the 8th bit of the output data register to make the I/O pin-8 as HIGH (1) (3,3V)
-	*pGPIOEoutput |= (1 << 8);
+//	*pGPIOEoutput |= (1 << 8);
 
-//	// Turn on all leds
-//	*pGPIOEmode |= 0x55550000; // set the 8th-15th pin mode to 01 (general purpose output mode) -- All LEDs
-//
-//	// Set the 8th-15th bit of the output data register to make the I/O pin-8 as HIGH (1) (3,3V) -- All LEDs
-//	*pGPIOEoutput |= 0x0000FF00;
+	while(1)
+	{
+		// Set the 8th-15th bit of the output data register to make the I/O pin-8 as HIGH (1) (3,3V) -- All LEDs
+		*pGPIOEoutput |= 0x0000FF00;
 
-    /* Loop forever */
-	for(;;);
+		delay(1);
+
+		*pGPIOEoutput &= ~(0x0000FF00);
+
+		delay(1);
+	}
+
 }
 
-
+void delay(uint32_t seconds)
+{
+	seconds *= 800000;
+	for(uint32_t i = 0; i < seconds; i++);
+}
