@@ -1,14 +1,14 @@
 #include <stdint.h>
 
-void delay(uint32_t seconds);
+void delay(uint32_t);
 void ledON(uint32_t*, uint8_t);
 void ledOFF(uint32_t*, uint8_t);
 
 int main(void)
 {
-	uint32_t *pRCC = (uint32_t*) 0x40021014;
-	uint32_t *pGPIOEmode = (uint32_t*) 0x48001000;
-	uint32_t *pGPIOEoutput = (uint32_t*) 0x48001014;
+	uint32_t *const pRCC = (uint32_t*) 0x40021014;
+	uint32_t *const pGPIOEmode = (uint32_t*) 0x48001000;
+	uint32_t *const pGPIOEoutput = (uint32_t*) 0x48001014;
 
 	// Enable the clock for GPIOE peripheral in the AHBENR
 	*pRCC |= (1 << 21); // SET the 21st bit position
@@ -36,13 +36,13 @@ int main(void)
 }
 
 // ledON sets the (i + 8)-th bit of the output data register HIGH (value: 1) (3,3 Volts)
-void ledON(uint32_t* led, uint8_t i)
+void ledON(uint32_t *const led, uint8_t i)
 {
 	*led |= (1 << (i + 8));
 }
 
 // ledOFF clears the i-th bit of the output data register to LOW (value: 0) (0 Volts)
-void ledOFF(uint32_t* led, uint8_t i)
+void ledOFF(uint32_t *const led, uint8_t i)
 {
 	*led &= ~(1 << i);
 }
