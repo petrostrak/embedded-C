@@ -1,17 +1,17 @@
 #include <stdint.h>
 
-void delay(uint32_t);
-void ledON(uint32_t*, uint8_t);
-void ledOFF(uint32_t*, uint8_t);
+void delay(volatile uint32_t);
+void ledON(volatile uint32_t*, uint8_t);
+void ledOFF(volatile uint32_t*, uint8_t);
 
 int main(void)
 {
-	uint32_t *const pRCCE = (uint32_t*) 0x40021014;
-	uint32_t *const pRCCA = (uint32_t*) 0x40021014;
-	uint32_t *const pGPIOEmode = (uint32_t*) 0x48001000;
-	uint32_t *const pGPIOEoutput = (uint32_t*) 0x48001014;
-	uint32_t *const pGPIOAmode = (uint32_t*) 0x48000000;
-	uint32_t *const pGPIOAinput = (uint32_t*) 0x48000010;
+	uint32_t volatile *pRCCE = (uint32_t*) 0x40021014;
+	uint32_t volatile *pRCCA = (uint32_t*) 0x40021014;
+	uint32_t volatile *pGPIOEmode = (uint32_t*) 0x48001000;
+	uint32_t volatile *pGPIOEoutput = (uint32_t*) 0x48001014;
+	uint32_t volatile *pGPIOAmode = (uint32_t*) 0x48000000;
+	uint32_t volatile *pGPIOAinput = (uint32_t*) 0x48000010;
 
 	// Enable the clock for GPIOE peripheral in the AHBENR
 	*pRCCE |= (1 << 21); // SET the 21st bit position
@@ -29,7 +29,7 @@ int main(void)
 	while(1)
 	{
 		// Read the PA0 status (GPIOA input data register)
-		uint8_t PA0Status = (uint8_t)*pGPIOAinput & 0x1; // Since we only need to read the 1st bit, we zeroed all others
+		uint8_t PA0Status = (uint8_t)(*pGPIOAinput & 0x1); // Since we only need to read the 1st bit, we zeroed all others
 
 		if(PA0Status)
 		{
@@ -40,11 +40,11 @@ int main(void)
 
 				ledON(pGPIOEoutput, next);
 
-				delay(1);
+				delay(2);
 
 				ledOFF(pGPIOEoutput, current);
 
-				delay(1);
+				delay(2);
 			}
 		} else {
 			*pGPIOEoutput &= 0x0; // Clear all output bits before start the iteration
@@ -54,11 +54,11 @@ int main(void)
 
 				ledON(pGPIOEoutput, next);
 
-				delay(1);
+				delay(2);
 
 				ledOFF(pGPIOEoutput, current);
 
-				delay(1);
+				delay(2);
 			}
 		}
 	}
@@ -66,19 +66,19 @@ int main(void)
 }
 
 // ledON sets the (i + 8)-th bit of the output data register HIGH (value: 1) (3,3 Volts)
-void ledON(uint32_t *const led, uint8_t i)
+void ledON(uint32_t volatile *led, uint8_t i)
 {
 	*led |= (1 << (i + 8));
 }
 
 // ledOFF clears the i-th bit of the output data register to LOW (value: 0) (0 Volts)
-void ledOFF(uint32_t *const led, uint8_t i)
+void ledOFF(uint32_t volatile *led, uint8_t i)
 {
 	*led &= ~(1 << i);
 }
 
 // delay simulates a human-eye-visible delay
-void delay(uint32_t seconds)
+void delay(uint32_t volatile seconds)
 {
 	seconds *= 30000;
 	for(uint32_t i = 0; i < seconds; i++);
