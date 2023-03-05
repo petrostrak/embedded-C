@@ -1,18 +1,15 @@
 #include <stdint.h>
+#include "leds.h"
 
-void delay(volatile uint32_t);
-void ledON(volatile uint32_t*, uint8_t);
-void ledOFF(volatile uint32_t*, uint8_t);
+uint32_t volatile *const pRCCE = (uint32_t*) 0x40021014;
+uint32_t volatile *const pRCCA = (uint32_t*) 0x40021014;
+uint32_t volatile *const pGPIOEmode = (uint32_t*) 0x48001000;
+uint32_t volatile *const pGPIOEoutput = (uint32_t*) 0x48001014;
+uint32_t volatile *const pGPIOAmode = (uint32_t*) 0x48000000;
+uint32_t const volatile *const pGPIOAinput = (uint32_t*) 0x48000010; // we can use const volatile in read only memory addresses
 
 int main(void)
 {
-	uint32_t volatile *pRCCE = (uint32_t*) 0x40021014;
-	uint32_t volatile *pRCCA = (uint32_t*) 0x40021014;
-	uint32_t volatile *pGPIOEmode = (uint32_t*) 0x48001000;
-	uint32_t volatile *pGPIOEoutput = (uint32_t*) 0x48001014;
-	uint32_t volatile *pGPIOAmode = (uint32_t*) 0x48000000;
-	uint32_t volatile *pGPIOAinput = (uint32_t*) 0x48000010;
-
 	// Enable the clock for GPIOE peripheral in the AHBENR
 	*pRCCE |= (1 << 21); // SET the 21st bit position
 
@@ -63,23 +60,4 @@ int main(void)
 		}
 	}
 
-}
-
-// ledON sets the (i + 8)-th bit of the output data register HIGH (value: 1) (3,3 Volts)
-void ledON(uint32_t volatile *led, uint8_t i)
-{
-	*led |= (1 << (i + 8));
-}
-
-// ledOFF clears the i-th bit of the output data register to LOW (value: 0) (0 Volts)
-void ledOFF(uint32_t volatile *led, uint8_t i)
-{
-	*led &= ~(1 << i);
-}
-
-// delay simulates a human-eye-visible delay
-void delay(uint32_t volatile seconds)
-{
-	seconds *= 30000;
-	for(uint32_t i = 0; i < seconds; i++);
 }
