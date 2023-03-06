@@ -23,9 +23,32 @@ struct DataSetUnaligned
 	short data4;
 }__attribute__((packed));
 
+typedef struct
+{
+	char data1;
+	int data2;
+	char data3;
+	short data4;
+	struct
+	{
+		float data5;
+		float data6;
+	}ExtraData;
+}DataSet_t;
+
 int main(void) {
 	struct DataSet data;
 	struct DataSetUnaligned data1;
+	DataSet_t d = {
+			.data1 = 0x11,
+			.data2 = 0xEEEEFFFF,
+			.data3 = 0x22,
+			.data4 = 0xABCD,
+			.ExtraData = {
+					.data5 = 0.1,
+					.data6 = 0.2,
+			},
+	};
 
 	data.data1 = 0x11;
 	data.data2 = 0xEEEEFFFF;
