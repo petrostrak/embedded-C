@@ -8,6 +8,16 @@
 #ifndef PERIPHERALS_H_
 #define PERIPHERALS_H_
 
+#define RCC_BASE_ADDR 			((RCC_AHBENR_t*) 0x40021014)
+#define GPIOE_BASE_ADDR 		((GPIOx_MODER_t*) 0x48001000)
+#define GPIOA_MODE_BASE_ADDR 	((GPIOx_MODER_t*) 0x48000000)
+#define GPIOE_OUTPUT 			((GPIOx_ODR_t*) 0x48001014)
+#define GPIOA_INPUT 			((GPIOx_IDR_t*) 0x48000010)
+
+#define STATE_HIGH				(1)
+#define STATE_LOW 				(0)
+#define DELAY					(30000)
+
 #include <stdint.h>
 
 typedef struct

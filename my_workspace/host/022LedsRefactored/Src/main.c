@@ -19,32 +19,32 @@
 #include "leds.h"
 #include "peripherals.h"
 
-RCC_AHBENR_t volatile *const pRCCE = (RCC_AHBENR_t*) 0x40021014;
-GPIOx_MODER_t volatile *const pGPIOEmode = (GPIOx_MODER_t*) 0x48001000;
-GPIOx_ODR_t volatile *const pGPIOEoutput = (GPIOx_ODR_t*) 0x48001014;
-GPIOx_MODER_t volatile *const pGPIOAmode = (GPIOx_MODER_t*) 0x48000000;
+RCC_AHBENR_t volatile *const pRCCE = RCC_BASE_ADDR;
+GPIOx_MODER_t volatile *const pGPIOEmode = GPIOE_BASE_ADDR;
+GPIOx_ODR_t volatile *const pGPIOEoutput = GPIOE_OUTPUT;
+GPIOx_MODER_t volatile *const pGPIOAmode = GPIOA_MODE_BASE_ADDR;
 GPIOx_IDR_t const volatile *const pGPIOAinput = (GPIOx_IDR_t*) 0x48000010; // we can use const volatile in read only memory addresses
 
 int main(void)
 {
 	// Enable the clock for GPIOE peripheral in the AHBENR
-	pRCCE->IOPEEN = 1;
+	pRCCE->IOPEEN = STATE_HIGH;
 
 	// Enable the clock for GPIOA peripheral in the AHBENR
-	pRCCE->IOPAEN = 1; // SET the 21st bit position
+	pRCCE->IOPAEN = STATE_HIGH; // SET the 21st bit position
 
 	// Configure the mode of the IO pins as output.
-	pGPIOEmode->MODER_8 	= 1; // set the 8th-15th pin mode to 01 general purpose output mode)
-	pGPIOEmode->MODER_9 	= 1;
-	pGPIOEmode->MODER_10	= 1;
-	pGPIOEmode->MODER_11	= 1;
-	pGPIOEmode->MODER_12	= 1;
-	pGPIOEmode->MODER_13	= 1;
-	pGPIOEmode->MODER_14	= 1;
-	pGPIOEmode->MODER_15	= 1;
+	pGPIOEmode->MODER_8 	= STATE_HIGH; // set the 8th-15th pin mode to 01 general purpose output mode)
+	pGPIOEmode->MODER_9 	= STATE_HIGH;
+	pGPIOEmode->MODER_10	= STATE_HIGH;
+	pGPIOEmode->MODER_11	= STATE_HIGH;
+	pGPIOEmode->MODER_12	= STATE_HIGH;
+	pGPIOEmode->MODER_13	= STATE_HIGH;
+	pGPIOEmode->MODER_14	= STATE_HIGH;
+	pGPIOEmode->MODER_15	= STATE_HIGH;
 
 	// Configure the mode of the IO pin PA0 as input
-	pGPIOAmode->MODER_0	= 0;
+	pGPIOAmode->MODER_0	= STATE_LOW;
 
 
 	while(1)

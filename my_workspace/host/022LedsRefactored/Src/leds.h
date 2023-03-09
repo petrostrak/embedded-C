@@ -24,20 +24,20 @@ void ledOFF(uint32_t volatile *led, uint8_t i)
 // delay simulates a human-eye-visible delay
 void delay(uint32_t volatile seconds)
 {
-	seconds *= 30000;
+	seconds *= DELAY;
 	for(uint32_t i = 0; i < seconds; i++);
 }
 
 void clearPins(GPIOx_ODR_t volatile *led)
 {
-	led->ODR8  = 0;
-	led->ODR9  = 0;
-	led->ODR10 = 0;
-	led->ODR11 = 0;
-	led->ODR12 = 0;
-	led->ODR13 = 0;
-	led->ODR14 = 0;
-	led->ODR15 = 0;
+	led->ODR8  = STATE_LOW;
+	led->ODR9  = STATE_LOW;
+	led->ODR10 = STATE_LOW;
+	led->ODR11 = STATE_LOW;
+	led->ODR12 = STATE_LOW;
+	led->ODR13 = STATE_LOW;
+	led->ODR14 = STATE_LOW;
+	led->ODR15 = STATE_LOW;
 }
 
 #endif /* LEDS_H_ */
