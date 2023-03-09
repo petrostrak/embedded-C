@@ -15,34 +15,29 @@
  *
  ******************************************************************************
  */
-
-#include <stdint.h>
 #include "peripherals.h"
 #include "keys.h"
 
 int main(void)
 {
 	// Enable the clock for GPIOD peripheral in the AHBENR
-	pRCCE->IOPDEN = STATE_HIGH;
+	set_gpiod_bus();
 
 	// Configure the mode of the PDO, PD1, PD2, PD3 pins as output.
-	pGPIODmode->MODER_0 = STATE_HIGH;
-	pGPIODmode->MODER_1 = STATE_HIGH;
-	pGPIODmode->MODER_2 = STATE_HIGH;
-	pGPIODmode->MODER_3 = STATE_HIGH;
+	set_gpiod_mode_output();
 
 	// Configure the mode of the PD8, PD9, PD10, PD11 pins as input
-	pGPIODmode->MODER_8 = STATE_LOW;
-	pGPIODmode->MODER_9 = STATE_LOW;
-	pGPIODmode->MODER_10 = STATE_LOW;
-	pGPIODmode->MODER_11 = STATE_LOW;
+	clear_gpiod_mode_input();
+
+	// Set internal pull-up resistors for PD8, PD9, PD10 and PD11
+	set_pull_up_resistors();
 
 	while(1)
 	{
-		setRowsHigh();
-		scanRow1();
-		scanRow2();
-		scanRow3();
-		scanRow4();
+		set_rows_high();
+		scan_row_1();
+		scan_row_2();
+		scan_row_3();
+		scan_row_4();
 	}
 }

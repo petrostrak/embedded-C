@@ -8,15 +8,17 @@
 #ifndef PERIPHERALS_H_
 #define PERIPHERALS_H_
 
-#define RCC_BASE_ADDR 			((RCC_AHBENR_t*) 0x40021014)
-#define GPIOD_BASE_ADDR 		((GPIOx_MODER_t*) 0x48000C00)
-#define GPIOA_MODE_BASE_ADDR 	((GPIOx_MODER_t*) 0x48000000)
-#define GPIOD_OUTPUT 			((GPIOx_ODR_t*) 0x48000C14)
-#define GPIOD_INPUT 			((GPIOx_IDR_t*) 0x48000C10)
+#define RCC_BASE_ADDR 			(RCC_AHBENR_t*) (0x40021014)
+#define GPIOD_BASE_ADDR 		(GPIOx_MODER_t*) (0x48000C00)
+#define GPIOD_OUTPUT 			(GPIOx_ODR_t*) (0x48000C00 + 0x14)
+#define GPIOD_INPUT 			(GPIOx_IDR_t*) (0x48000C00 + 0x10)
+#define GPIOD_PULL_UP_DOWN		(GPIOx_PUPDR_t*)(0x48000C00 + 0x0C)
 
 #define STATE_HIGH				(1)
 #define STATE_LOW 				(0)
-#define DELAY					(30000)
+#define DELAY					(300000)
+#define PULL_UP					(1)
+#define PULL_DOWN				(3)
 
 #include <stdint.h>
 
@@ -106,5 +108,25 @@ typedef struct
 	uint32_t IDR15		:1;
 	uint32_t Res0x16_31	:16;
 }GPIOx_IDR_t;
+
+typedef struct
+{
+	uint32_t PUPDR00	:2;
+	uint32_t PUPDR01	:2;
+	uint32_t PUPDR02	:2;
+	uint32_t PUPDR03	:2;
+	uint32_t PUPDR04	:2;
+	uint32_t PUPDR05	:2;
+	uint32_t PUPDR06	:2;
+	uint32_t PUPDR07	:2;
+	uint32_t PUPDR08	:2;
+	uint32_t PUPDR09	:2;
+	uint32_t PUPDR10	:2;
+	uint32_t PUPDR11	:2;
+	uint32_t PUPDR12	:2;
+	uint32_t PUPDR13	:2;
+	uint32_t PUPDR14	:2;
+	uint32_t PUPDR15	:2;
+}GPIOx_PUPDR_t;
 
 #endif /* PERIPHERALS_H_ */
